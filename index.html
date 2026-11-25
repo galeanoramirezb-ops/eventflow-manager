@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EventFlow Manager · SIGEV — Mockup</title>
+<meta name="description" content="Mockup navegable del Sistema Inteligente de Gestión de Eventos y Aforo (SIGEV). Proyecto formativo SENA ADSO.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0b1220; --panel:#121b2e; --panel2:#182440; --line:#24324f;
+  --text:#e8edf7; --muted:#9aa7c0; --brand:#3ddc97; --brand2:#2bb3ff;
+  --warn:#ffb020; --danger:#ff5a5f; --ok:#3ddc97; --radius:14px;
+}
+body.hc{ --bg:#000; --panel:#000; --panel2:#111; --line:#fff; --text:#fff; --muted:#fff; --brand:#00ff88; --brand2:#00d0ff; }
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:Inter,system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.55}
+h1,h2,h3{font-family:"Space Grotesk",Inter,sans-serif;line-height:1.15;margin:0 0 .5em}
+a{color:var(--brand2)}
+.skip{position:absolute;left:-999px;top:0;background:var(--brand);color:#000;padding:.6em 1em;z-index:99}
+.skip:focus{left:8px;top:8px}
+:focus-visible{outline:3px solid var(--brand2);outline-offset:2px}
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+
+/* Header */
+header.top{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;gap:16px;height:64px}
+.logo{display:flex;align-items:center;gap:10px;font-family:"Space Grotesk";font-weight:700;font-size:1.1rem;text-decoration:none;color:var(--text)}
+.logo-mark{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,var(--brand),var(--brand2));display:grid;place-items:center;color:#06121f;font-weight:800}
+.nav nav{display:flex;gap:4px;margin-left:auto;flex-wrap:wrap}
+.nav nav button{background:none;border:0;color:var(--muted);font:500 .92rem Inter;padding:.55em .8em;border-radius:9px;cursor:pointer;min-height:40px}
+.nav nav button[aria-selected="true"],.nav nav button:hover{color:var(--text);background:var(--panel2)}
+.hc-toggle{border:1px solid var(--line);background:var(--panel);color:var(--text);border-radius:9px;padding:.5em .8em;cursor:pointer;font:500 .85rem Inter;min-height:40px}
+.menu-btn{display:none}
+@media(max-width:860px){
+  .nav nav{display:none;position:absolute;top:64px;left:0;right:0;background:var(--bg);flex-direction:column;padding:10px 20px;border-bottom:1px solid var(--line)}
+  .nav nav.open{display:flex}
+  .menu-btn{display:block;margin-left:auto}
+  .hc-toggle{margin-left:0}
+}
+
+/* Generic */
+.view{display:none;padding:40px 0 70px;animation:fade .35s ease}
+.view.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:22px}
+.grid{display:grid;gap:18px}
+.g2{grid-template-columns:repeat(2,1fr)} .g3{grid-template-columns:repeat(3,1fr)} .g4{grid-template-columns:repeat(4,1fr)}
+@media(max-width:900px){.g3,.g4{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:620px){.g2,.g3,.g4{grid-template-columns:1fr}}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:11px;padding:.8em 1.3em;font:600 .95rem Inter;cursor:pointer;min-height:48px;text-decoration:none}
+.btn-primary{background:var(--brand);color:#04140c}
+.btn-ghost{background:transparent;border:1px solid var(--line);color:var(--text)}
+.tag{display:inline-block;font-size:.75rem;font-weight:600;padding:.25em .65em;border-radius:99px;background:var(--panel2);color:var(--muted);border:1px solid var(--line)}
+.muted{color:var(--muted)}
+.section-title{display:flex;align-items:end;justify-content:space-between;gap:14px;margin-bottom:22px;flex-wrap:wrap}
+.mock-note{font-size:.8rem;color:var(--muted);border:1px dashed var(--line);border-radius:10px;padding:.5em .8em;display:inline-block}
+
+/* Hero */
+.hero{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center;padding:30px 0 50px}
+@media(max-width:900px){.hero{grid-template-columns:1fr}}
+.hero h1{font-size:clamp(2.1rem,5vw,3.5rem)}
+.hero h1 span{background:linear-gradient(90deg,var(--brand),var(--brand2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p.lead{font-size:1.12rem;color:var(--muted);max-width:56ch}
+.hero-cta{display:flex;gap:12px;flex-wrap:wrap;margin:26px 0}
+.hero-stats{display:flex;gap:28px;flex-wrap:wrap}
+.hero-stats b{font-family:"Space Grotesk";font-size:1.6rem;display:block}
+.hero-visual{position:relative}
+.phone{width:290px;margin:0 auto;background:#05090f;border:10px solid #1c2740;border-radius:36px;padding:18px 16px;box-shadow:0 30px 80px -20px #2bb3ff44}
+.phone .scr{background:var(--panel);border-radius:20px;padding:18px;text-align:center}
+.floating{position:absolute;background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:10px 14px;font-size:.85rem;box-shadow:0 10px 30px #0008}
+.f1{top:10%;left:0}.f2{bottom:14%;right:0}
+@media(max-width:620px){.floating{display:none}}
+
+.feature .ico{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;background:var(--panel2);font-size:1.3rem;margin-bottom:12px}
+
+/* Dashboard */
+.kpi b{font-family:"Space Grotesk";font-size:2rem;display:block}
+.gauge-wrap{display:flex;align-items:center;gap:26px;flex-wrap:wrap}
+.gauge{--p:0;width:180px;height:180px;border-radius:50%;background:conic-gradient(var(--gc,var(--ok)) calc(var(--p)*1%),var(--panel2) 0);display:grid;place-items:center;transition:background .6s}
+.gauge::after{content:attr(data-label);width:136px;height:136px;border-radius:50%;background:var(--panel);display:grid;place-items:center;font:700 2rem "Space Grotesk"}
+.alert{border-radius:11px;padding:12px 14px;font-weight:600;display:flex;gap:10px;align-items:center}
+.alert.ok{background:#3ddc9722;color:var(--ok)} .alert.warn{background:#ffb02022;color:var(--warn)} .alert.full{background:#ff5a5f22;color:var(--danger)}
+.bars{display:flex;align-items:flex-end;gap:6px;height:160px;padding-top:10px}
+.bars div{flex:1;background:linear-gradient(180deg,var(--brand2),#2bb3ff33);border-radius:6px 6px 0 0;transition:height .5s}
+table{width:100%;border-collapse:collapse;font-size:.9rem}
+th,td{text-align:left;padding:10px 8px;border-bottom:1px solid var(--line)}
+th{color:var(--muted);font-weight:600;font-size:.78rem;text-transform:uppercase;letter-spacing:.04em}
+.pill{font-size:.75rem;padding:.2em .6em;border-radius:99px;font-weight:600}
+.pill.ok{background:#3ddc9722;color:var(--ok)} .pill.bad{background:#ff5a5f22;color:var(--danger)} .pill.w{background:#ffb02022;color:var(--warn)}
+.table-scroll{overflow-x:auto}
+
+/* Ticket */
+.ticket{display:grid;grid-template-columns:1fr 240px;background:var(--panel);border:1px solid var(--line);border-radius:18px;overflow:hidden;max-width:760px}
+@media(max-width:700px){.ticket{grid-template-columns:1fr}}
+.ticket .left{padding:26px;border-right:2px dashed var(--line)}
+.ticket .right{padding:22px;display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--panel2)}
+#qr{background:#fff;padding:10px;border-radius:12px;width:190px;height:190px}
+.timer{width:100%;height:6px;background:var(--line);border-radius:9px;margin-top:12px;overflow:hidden}
+.timer span{display:block;height:100%;background:var(--brand);transition:width 1s linear}
+.code{font-family:ui-monospace,monospace;letter-spacing:.2em;font-size:1.05rem;margin-top:8px}
+
+/* Validator */
+.validator{max-width:420px;margin:0 auto}
+.scan-screen{height:300px;border-radius:18px;display:grid;place-items:center;text-align:center;padding:20px;transition:background .3s;background:var(--panel2);border:1px solid var(--line);position:relative;overflow:hidden}
+.scan-screen.ok{background:#14b87a} .scan-screen.bad{background:#d9363b} .scan-screen *{color:#fff}
+.scan-frame{width:170px;height:170px;border:3px solid var(--brand2);border-radius:16px;position:relative}
+.scan-frame::after{content:"";position:absolute;left:8px;right:8px;height:2px;background:var(--brand2);box-shadow:0 0 12px var(--brand2);animation:scan 1.8s ease-in-out infinite}
+@keyframes scan{0%,100%{top:10px}50%{top:150px}}
+.v-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.v-actions .btn{min-height:56px}
+.btn-bad{background:var(--danger);color:#fff}
+.avatar{width:72px;height:72px;border-radius:50%;background:#ffffff33;display:grid;place-items:center;font:700 1.6rem "Space Grotesk";margin:0 auto 8px}
+
+/* Forms */
+.form label{display:block;font-weight:600;font-size:.88rem;margin:14px 0 6px}
+.form input,.form select{width:100%;padding:.8em .9em;border-radius:10px;border:1px solid var(--line);background:var(--panel2);color:var(--text);font:1rem Inter;min-height:48px}
+.check{display:flex;gap:10px;align-items:flex-start;margin-top:16px;font-size:.88rem}
+.check input{width:22px;height:22px;min-height:auto;margin-top:2px}
+.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(120px);background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:12px 18px;transition:transform .35s;z-index:50;max-width:90vw}
+.toast.show{transform:translateX(-50%) translateY(0)}
+
+/* Log */
+.log{font-family:ui-monospace,monospace;font-size:.8rem}
+.log td{white-space:nowrap}
+
+footer{border-top:1px solid var(--line);padding:34px 0;color:var(--muted);font-size:.9rem}
+footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<a href="#main" class="skip">Saltar al contenido</a>
+
+<header class="top">
+  <div class="wrap nav">
+    <a href="#" class="logo" data-go="inicio" aria-label="EventFlow Manager, inicio"><span class="logo-mark" aria-hidden="true">EF</span>EventFlow&nbsp;<span class="muted" style="font-weight:500">SIGEV</span></a>
+    <button class="hc-toggle menu-btn" id="menuBtn" aria-expanded="false" aria-controls="mainNav">☰ Menú</button>
+    <nav id="mainNav" role="tablist" aria-label="Secciones del mockup">
+      <button role="tab" data-go="inicio" aria-selected="true">Inicio</button>
+      <button role="tab" data-go="registro">Registro</button>
+      <button role="tab" data-go="dashboard">Dashboard aforo</button>
+      <button role="tab" data-go="ticket">Mi ticket QR</button>
+      <button role="tab" data-go="validador">Validador</button>
+      <button role="tab" data-go="auditoria">Auditoría</button>
+      <button role="tab" data-go="equipo">Equipo</button>
+    </nav>
+    <button class="hc-toggle" id="hcBtn" aria-pressed="false" title="Modo alto contraste">◐ Alto contraste</button>
+  </div>
+</header>
+
+<main id="main">
+
+<!-- INICIO -->
+<section class="view active" id="inicio" aria-labelledby="t-inicio">
+  <div class="wrap">
+    <div class="hero">
+      <div>
+        <span class="tag">SENA · CIES Regional Huila · ADSO 3413974</span>
+        <h1 id="t-inicio" style="margin-top:16px">Eventos seguros, aforo bajo control y <span>cero ingeniería social</span>.</h1>
+        <p class="lead">EventFlow Manager (SIGEV) automatiza el ciclo de vida de eventos institucionales: registro con consentimiento, tickets con QR dinámico, validación en puerta en menos de 1,5 s y monitoreo de aforo en tiempo real.</p>
+        <div class="hero-cta">
+          <button class="btn btn-primary" data-go="dashboard">Ver dashboard en vivo →</button>
+          <button class="btn btn-ghost" data-go="validador">Probar el validador</button>
+        </div>
+        <div class="hero-stats">
+          <div><b>&lt; 1,5 s</b><span class="muted">escaneo QR</span></div>
+          <div><b>99,8 %</b><span class="muted">disponibilidad</span></div>
+          <div><b>WCAG 2.1 AA</b><span class="muted">accesibilidad</span></div>
+        </div>
+      </div>
+      <div class="hero-visual" aria-hidden="true">
+        <div class="phone"><div class="scr">
+          <div class="muted" style="font-size:.8rem">Foro de Innovación TIC 2026</div>
+          <canvas id="qrHero" width="200" height="200" style="background:#fff;border-radius:10px;padding:8px;margin:12px auto;display:block;width:180px;height:180px"></canvas>
+          <div style="font-size:.8rem" class="muted">Código rota cada 30 s</div>
+        </div></div>
+        <div class="floating f1">🟢 Acceso válido · 0,8 s</div>
+        <div class="floating f2">⚠️ Aforo al 80 %</div>
+      </div>
+    </div>
+
+    <div class="section-title"><h2>Siete módulos, una plataforma</h2><span class="mock-note">Mockup visual · datos simulados, sin base de datos</span></div>
+    <div class="grid g4">
+      <article class="card feature"><div class="ico">👥</div><h3>Usuarios y roles</h3><p class="muted">RBAC con Superadmin, Organizador, Validador y Asistente. Autenticación JWT y consentimiento Ley 1581.</p></article>
+      <article class="card feature"><div class="ico">📅</div><h3>Eventos y aforo</h3><p class="muted">Creación de eventos con fecha, sede, cupos, tipos de boleta y alertas de capacidad.</p></article>
+      <article class="card feature"><div class="ico">🎟️</div><h3>Tickets dinámicos</h3><p class="muted">QR rotativo TOTP con firma HMAC-SHA256 y PDF enviado por correo.</p></article>
+      <article class="card feature"><div class="ico">📷</div><h3>Validación óptica</h3><p class="muted">Escaneo con foto del titular, rechazo de duplicados y alertas visuales, sonoras y hápticas.</p></article>
+      <article class="card feature"><div class="ico">📈</div><h3>Aforo en vivo</h3><p class="muted">Semáforo de ocupación con alerta al 80 % y bloqueo automático al 100 %.</p></article>
+      <article class="card feature"><div class="ico">📊</div><h3>Reportes</h3><p class="muted">Tableros de telemetría y exportación a PDF y Excel.</p></article>
+      <article class="card feature"><div class="ico">🛡️</div><h3>Auditoría forense</h3><p class="muted">Bitácora inmutable con hashes SHA-256 y detección de suplantación.</p></article>
+      <article class="card feature"><div class="ico">♿</div><h3>Centrado en personas</h3><p class="muted">Alto contraste, botones de 48 px, lectores de pantalla y navegación por teclado.</p></article>
+    </div>
+
+    <div class="card" style="margin-top:28px">
+      <h2>Blindaje contra ingeniería social</h2>
+      <div class="grid g2" style="margin-top:10px">
+        <div><h3 style="font-size:1rem">Suplantación en puerta</h3><p class="muted">Al escanear, el validador ve la foto y la cédula del titular. La decisión deja de depender de la persuasión de quien está en fila.</p></div>
+        <div><h3 style="font-size:1rem">Clonación y reventa</h3><p class="muted">El QR cambia cada 30 segundos: una captura de pantalla compartida caduca y dispara alerta roja.</p></div>
+        <div><h3 style="font-size:1rem">Presión en la fila</h3><p class="muted">Un ticket inválido bloquea la terminal 3 s y muestra la hora del primer uso registrado.</p></div>
+        <div><h3 style="font-size:1rem">Anti-phishing</h3><p class="muted">El asistente legítimo recibe correo y SMS en el momento exacto en que su ticket se valida.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REGISTRO -->
+<section class="view" id="registro" aria-labelledby="t-reg">
+  <div class="wrap">
+    <div class="section-title"><div><h2 id="t-reg">Registro de asistente</h2><p class="muted">RF1 · Captura mínima de datos con consentimiento informado (Ley 1581 de 2012).</p></div><span class="mock-note">Formulario de demostración: no envía datos</span></div>
+    <div class="grid g2">
+      <form class="card form" id="regForm" novalidate>
+        <label for="nombre">Nombre completo</label>
+        <input id="nombre" autocomplete="name" placeholder="Ej. Laura Gómez" required>
+        <label for="doc">Número de documento</label>
+        <input id="doc" inputmode="numeric" placeholder="1.075.000.000" required>
+        <label for="correo">Correo electrónico</label>
+        <input id="correo" type="email" autocomplete="email" placeholder="nombre@correo.com" required>
+        <label for="evento">Evento</label>
+        <select id="evento"><option>Foro de Innovación TIC 2026</option><option>Feria de Emprendimiento CIES</option><option>Hackatón ADSO Huila</option></select>
+        <label for="rol">Tipo de entrada</label>
+        <select id="rol"><option>Aprendiz</option><option>Instructor</option><option>Invitado externo</option></select>
+        <div class="check"><input type="checkbox" id="habeas" required><label for="habeas" style="margin:0;font-weight:400">Autorizo el tratamiento de mis datos personales conforme a la Ley 1581 de 2012. Puedo consultarlos o pedir su supresión en cualquier momento.</label></div>
+        <button class="btn btn-primary" style="width:100%;margin-top:20px" type="submit">Registrarme y generar ticket</button>
+      </form>
+      <div class="card">
+        <h3>Lo que pasa al registrarte</h3>
+        <ol class="muted" style="padding-left:1.2em">
+          <li>Tus datos se validan y la contraseña se almacena con bcrypt.</li>
+          <li>Se genera un ticket con QR dinámico firmado (TOTP + HMAC-SHA256).</li>
+          <li>Recibes el PDF oficial por correo con instrucciones anti-phishing.</li>
+          <li>Cuando tu ticket se valide en puerta, recibirás una notificación inmediata.</li>
+        </ol>
+        <div class="alert ok" style="margin-top:16px">🔒 Solo pedimos lo estrictamente necesario para el evento.</div>
+        <h3 style="margin-top:24px">Iniciar sesión</h3>
+        <p class="muted">RF2 · Autenticación JWT con expiración de 8 horas. RF3 · Recuperación por correo con token válido 30 minutos.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DASHBOARD -->
+<section class="view" id="dashboard" aria-labelledby="t-dash">
+  <div class="wrap">
+    <div class="section-title"><div><h2 id="t-dash">Monitoreo de aforo en tiempo real</h2><p class="muted">Foro de Innovación TIC 2026 · Auditorio principal CIES · Neiva</p></div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn btn-ghost" id="simBtn">⏸ Pausar simulación</button><button class="btn btn-ghost" id="resetBtn">↺ Reiniciar</button></div></div>
+    <div class="grid g4">
+      <div class="card kpi"><span class="muted">Ingresos</span><b id="kIn">0</b></div>
+      <div class="card kpi"><span class="muted">Aforo máximo</span><b>500</b></div>
+      <div class="card kpi"><span class="muted">Cupos libres</span><b id="kFree">500</b></div>
+      <div class="card kpi"><span class="muted">Intentos rechazados</span><b id="kRej" style="color:var(--danger)">0</b></div>
+    </div>
+    <div class="grid g2" style="margin-top:18px">
+      <div class="card">
+        <h3>Ocupación</h3>
+        <div class="gauge-wrap">
+          <div class="gauge" id="gauge" data-label="0%" role="img" aria-label="Ocupación 0 por ciento"></div>
+          <div style="flex:1;min-width:200px">
+            <div class="alert ok" id="aforoAlert" aria-live="polite">🟢 Flujo normal de ingreso</div>
+            <p class="muted" style="font-size:.88rem;margin-top:12px">Alerta preventiva al 80 %. Bloqueo automático de ingresos al 100 % (Ley 1523 de 2012).</p>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Ingresos por minuto</h3>
+        <div class="bars" id="bars" aria-hidden="true"></div>
+        <p class="muted" style="font-size:.8rem;margin:8px 0 0">Últimos 20 minutos</p>
+      </div>
+    </div>
+    <div class="card" style="margin-top:18px">
+      <div class="section-title" style="margin-bottom:8px"><h3 style="margin:0">Últimos accesos</h3><button class="btn btn-ghost" onclick="toast('📄 Reporte exportado (simulado): asistencia_foro_tic.xlsx')">Exportar Excel / PDF</button></div>
+      <div class="table-scroll"><table><thead><tr><th>Hora</th><th>Asistente</th><th>Puerta</th><th>Tipo</th><th>Estado</th></tr></thead><tbody id="accessRows"></tbody></table></div>
+    </div>
+  </div>
+</section>
+
+<!-- TICKET -->
+<section class="view" id="ticket" aria-labelledby="t-ticket">
+  <div class="wrap">
+    <div class="section-title"><div><h2 id="t-ticket">Mi ticket con QR dinámico</h2><p class="muted">RF6 · El código cambia cada 30 segundos. Una captura de pantalla no sirve para entrar.</p></div><span class="mock-note">QR ilustrativo, no es un ticket real</span></div>
+    <div class="ticket">
+      <div class="left">
+        <span class="tag">ENTRADA GENERAL · APRENDIZ</span>
+        <h3 style="font-size:1.6rem;margin-top:14px">Foro de Innovación TIC 2026</h3>
+        <div class="grid g2" style="margin-top:18px;gap:14px">
+          <div><div class="muted" style="font-size:.8rem">Titular</div><b>Laura Gómez Rojas</b></div>
+          <div><div class="muted" style="font-size:.8rem">Documento</div><b>CC ••• ••• 4821</b></div>
+          <div><div class="muted" style="font-size:.8rem">Fecha</div><b>12 dic 2026 · 8:00 a. m.</b></div>
+          <div><div class="muted" style="font-size:.8rem">Lugar</div><b>Auditorio CIES, Neiva</b></div>
+        </div>
+        <div class="alert warn" style="margin-top:20px;font-size:.85rem">⚠️ SIGEV nunca te pedirá tu código por WhatsApp ni llamadas. No compartas tu ticket.</div>
+      </div>
+      <div class="right">
+        <canvas id="qr" width="190" height="190" aria-label="Código QR dinámico del ticket" role="img"></canvas>
+        <div class="code" id="totp">— — —</div>
+        <div class="timer" aria-hidden="true"><span id="timerBar" style="width:100%"></span></div>
+        <div class="muted" style="font-size:.8rem;margin-top:6px">Renueva en <b id="secs">30</b> s</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VALIDADOR -->
+<section class="view" id="validador" aria-labelledby="t-val">
+  <div class="wrap">
+    <div class="section-title"><div><h2 id="t-val">Terminal del validador</h2><p class="muted">RF8 · Interfaz móvil para operadores de puerta con respuesta visual, sonora y háptica.</p></div><span class="mock-note">Simulación: usa los botones para probar</span></div>
+    <div class="grid g2">
+      <div class="validator">
+        <div class="scan-screen" id="scanScreen" aria-live="assertive">
+          <div id="scanIdle"><div class="scan-frame" style="margin:0 auto"></div><p class="muted" style="margin-top:16px">Apunta la cámara al código QR</p></div>
+        </div>
+        <div class="v-actions">
+          <button class="btn btn-primary" id="scanOk">Simular QR válido</button>
+          <button class="btn btn-bad" id="scanBad">Simular captura / duplicado</button>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Diseñado para quien está en la puerta</h3>
+        <ul class="muted" style="padding-left:1.2em">
+          <li><b style="color:var(--text)">Pantalla completa verde o roja</b> legible bajo el sol.</li>
+          <li><b style="color:var(--text)">Tonos diferenciados y vibración</b> para no depender solo de la vista.</li>
+          <li><b style="color:var(--text)">Botones de 48 px o más</b>, operables con una mano o con guantes.</li>
+          <li><b style="color:var(--text)">Foto y cédula del titular</b> en cada lectura válida.</li>
+          <li><b style="color:var(--text)">Bloqueo de 3 s</b> tras un rechazo, con la hora del primer uso.</li>
+        </ul>
+        <p class="muted" style="font-size:.85rem">Activa el botón <b>◐ Alto contraste</b> en la parte superior para ver el modo exterior.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AUDITORIA -->
+<section class="view" id="auditoria" aria-labelledby="t-aud">
+  <div class="wrap">
+    <div class="section-title"><div><h2 id="t-aud">Bitácora forense inmutable</h2><p class="muted">RF12 · Cada evento se encadena con el hash SHA-256 del anterior.</p></div><span class="mock-note">Registros de ejemplo</span></div>
+    <div class="card table-scroll">
+      <table class="log"><thead><tr><th>Fecha / hora</th><th>Actor</th><th>Acción</th><th>Resultado</th><th>Hash SHA-256</th></tr></thead><tbody id="logRows"></tbody></table>
+    </div>
+    <div class="grid g3" style="margin-top:18px">
+      <div class="card"><h3>RNF · Seguridad</h3><p class="muted">Tráfico cifrado con TLS 1.3, WebSockets seguros (WSS) y tokens JWT firmados.</p></div>
+      <div class="card"><h3>RNF · Rendimiento</h3><p class="muted">Validación en menos de 1,5 s y disponibilidad del 99,8 % en jornada de evento.</p></div>
+      <div class="card"><h3>RNF · Privacidad</h3><p class="muted">Recolección mínima, consentimiento explícito y derecho de consulta y supresión.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- EQUIPO -->
+<section class="view" id="equipo" aria-labelledby="t-eq">
+  <div class="wrap">
+    <div class="section-title"><div><h2 id="t-eq">Arquitectura y equipo</h2><p class="muted">Arquitectura cliente-servidor desacoplada de cuatro capas.</p></div></div>
+    <div class="grid g4">
+      <div class="card"><span class="tag">Presentación</span><h3 style="margin-top:12px">React 18 + Vite</h3><p class="muted">Tailwind CSS, PWA responsiva desde 360 px hasta 4K.</p></div>
+      <div class="card"><span class="tag">Negocio</span><h3 style="margin-top:12px">Spring Boot 3</h3><p class="muted">Java 21 LTS, Spring Security, JWT y bcrypt.</p></div>
+      <div class="card"><span class="tag">Persistencia</span><h3 style="margin-top:12px">PostgreSQL 16</h3><p class="muted">Transacciones ACID y JSONB para auditoría.</p></div>
+      <div class="card"><span class="tag">Infraestructura</span><h3 style="margin-top:12px">Docker + Grafana</h3><p class="muted">Contenedores, Prometheus y monitoreo de salud.</p></div>
+    </div>
+    <h2 style="margin-top:40px">Equipo</h2>
+    <div class="grid g2">
+      <div class="card" style="display:flex;gap:16px;align-items:center">
+        <div class="avatar" style="background:linear-gradient(135deg,var(--brand),var(--brand2));color:#04140c;margin:0;flex:none">BG</div>
+        <div><h3 style="margin:0">Brenda Carolina Galeano Ramírez</h3><p class="muted" style="margin:.2em 0 0">Diseño UI/UX inclusivo · Frontend React · Accesibilidad WCAG 2.1 AA</p></div>
+      </div>
+      <div class="card" style="display:flex;gap:16px;align-items:center">
+        <div class="avatar" style="background:linear-gradient(135deg,var(--brand2),var(--brand));color:#04140c;margin:0;flex:none">AC</div>
+        <div><h3 style="margin:0">Andrés Felipe Castro Bedoya</h3><p class="muted" style="margin:.2em 0 0">QA · Desarrollo backend · Pruebas y ciberdefensa</p></div>
+      </div>
+    </div>
+    <p class="muted" style="margin-top:18px">Aprendices de Tecnología en Análisis y Desarrollo de Software (ADSO) · Ficha 3413974 · SENA CIES Regional Huila.</p>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div><b style="color:var(--text)">EventFlow Manager · SIGEV</b><br>Mockup navegable del proyecto formativo · v1.0 · 2026</div>
+    <div>Brenda Carolina Galeano Ramírez · Andrés Felipe Castro Bedoya<br>SENA · ADSO 3413974</div>
+  </div>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+/* ---------- Navegación ---------- */
+const views=[...document.querySelectorAll('.view')];
+const tabs=[...document.querySelectorAll('#mainNav button')];
+const nav=document.getElementById('mainNav'), menuBtn=document.getElementById('menuBtn');
+function go(id){
+  views.forEach(v=>v.classList.toggle('active',v.id===id));
+  tabs.forEach(t=>t.setAttribute('aria-selected',t.dataset.go===id));
+  nav.classList.remove('open');menuBtn.setAttribute('aria-expanded','false');
+  history.replaceState(null,'','#'+id);window.scrollTo({top:0});
+}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-go]');if(b){e.preventDefault();go(b.dataset.go)}});
+menuBtn.onclick=()=>{const o=nav.classList.toggle('open');menuBtn.setAttribute('aria-expanded',o)};
+const start=location.hash.slice(1); if(start&&document.getElementById(start))go(start);
+
+/* ---------- Alto contraste ---------- */
+const hcBtn=document.getElementById('hcBtn');
+hcBtn.onclick=()=>{const on=document.body.classList.toggle('hc');hcBtn.setAttribute('aria-pressed',on)};
+
+/* ---------- Toast ---------- */
+let tt;function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('show'),3200)}
+
+/* ---------- QR ilustrativo (patrón pseudoaleatorio con marcadores) ---------- */
+function rng(seed){let s=seed>>>0;return()=>{s^=s<<13;s^=s>>>17;s^=s<<5;return(s>>>0)/4294967296}}
+function drawQR(canvas,seed){
+  const ctx=canvas.getContext('2d'),N=25,W=canvas.width,c=W/N,r=rng(seed);
+  ctx.fillStyle='#fff';ctx.fillRect(0,0,W,W);ctx.fillStyle='#0b1220';
+  const finder=(x,y)=>{ctx.fillRect(x*c,y*c,7*c,7*c);ctx.fillStyle='#fff';ctx.fillRect((x+1)*c,(y+1)*c,5*c,5*c);ctx.fillStyle='#0b1220';ctx.fillRect((x+2)*c,(y+2)*c,3*c,3*c)};
+  const inF=(x,y)=>(x<8&&y<8)||(x>N-9&&y<8)||(x<8&&y>N-9);
+  for(let y=0;y<N;y++)for(let x=0;x<N;x++)if(!inF(x,y)&&r()>.52)ctx.fillRect(x*c,y*c,Math.ceil(c),Math.ceil(c));
+  finder(0,0);finder(N-7,0);finder(0,N-7);
+}
+let seed=Date.now()%100000;
+drawQR(document.getElementById('qrHero'),seed);
+const qr=document.getElementById('qr');
+function newCode(){seed=(seed*7919+13)%999983;drawQR(qr,seed);drawQR(document.getElementById('qrHero'),seed+1);
+  document.getElementById('totp').textContent=String(seed).padStart(6,'0').replace(/(\d{3})(\d{3})/,'$1 $2')}
+let left=30;newCode();
+setInterval(()=>{left--;if(left<=0){left=30;newCode()}document.getElementById('secs').textContent=left;document.getElementById('timerBar').style.width=(left/30*100)+'%'},1000);
+
+/* ---------- Dashboard simulado ---------- */
+const CAP=500;let inside=0,rejected=0,running=true;
+const names=['Laura Gómez','Julián Perdomo','Valentina Rojas','Santiago Cuéllar','Daniela Trujillo','Camilo Vargas','Mariana Polanía','Sebastián Ortiz','Paula Andrade','Nicolás Medina','Sara Cabrera','Mateo Losada'];
+const types=['Aprendiz','Instructor','Invitado'];
+const bars=document.getElementById('bars');let barData=Array.from({length:20},()=>Math.random()*20+5);
+function renderBars(){bars.innerHTML=barData.map(v=>`<div style="height:${Math.min(100,v*3)}%"></div>`).join('')}
+renderBars();
+const rows=document.getElementById('accessRows');
+function hhmm(){return new Date().toLocaleTimeString('es-CO',{hour:'2-digit',minute:'2-digit',second:'2-digit'})}
+function addRow(n,ok){const tr=document.createElement('tr');tr.innerHTML=`<td>${hhmm()}</td><td>${n}</td><td>Puerta ${1+Math.floor(Math.random()*3)}</td><td>${types[Math.floor(Math.random()*3)]}</td><td><span class="pill ${ok?'ok':'bad'}">${ok?'Válido':'Rechazado'}</span></td>`;rows.prepend(tr);while(rows.children.length>7)rows.lastChild.remove()}
+function updateDash(){
+  const p=Math.round(inside/CAP*100),g=document.getElementById('gauge'),a=document.getElementById('aforoAlert');
+  g.style.setProperty('--p',p);g.dataset.label=p+'%';g.setAttribute('aria-label','Ocupación '+p+' por ciento');
+  g.style.setProperty('--gc',p>=100?'var(--danger)':p>=80?'var(--warn)':'var(--ok)');
+  document.getElementById('kIn').textContent=inside;document.getElementById('kFree').textContent=CAP-inside;document.getElementById('kRej').textContent=rejected;
+  if(p>=100){a.className='alert full';a.textContent='🔴 Aforo completo: ingresos bloqueados'}
+  else if(p>=80){a.className='alert warn';a.textContent='🟠 Alerta preventiva: aforo al '+p+' %'}
+  else{a.className='alert ok';a.textContent='🟢 Flujo normal de ingreso'}
+}
+function tick(){
+  if(!running||inside>=CAP)return;
+  const n=Math.floor(Math.random()*9)+3;inside=Math.min(CAP,inside+n);
+  for(let i=0;i<2;i++)addRow(names[Math.floor(Math.random()*names.length)],true);
+  if(Math.random()<.25){rejected++;addRow(names[Math.floor(Math.random()*names.length)],false)}
+  barData.shift();barData.push(n*2.2+Math.random()*6);renderBars();updateDash();
+}
+setInterval(tick,1400);updateDash();
+document.getElementById('simBtn').onclick=e=>{running=!running;e.target.textContent=running?'⏸ Pausar simulación':'▶ Reanudar simulación'};
+document.getElementById('resetBtn').onclick=()=>{inside=0;rejected=0;rows.innerHTML='';updateDash()};
+
+/* ---------- Validador ---------- */
+const scr=document.getElementById('scanScreen'),idle=scr.innerHTML;let locked=false;
+function beep(f,d){try{const A=new (window.AudioContext||window.webkitAudioContext)(),o=A.createOscillator();o.frequency.value=f;o.connect(A.destination);o.start();setTimeout(()=>{o.stop();A.close()},d)}catch(e){}}
+document.getElementById('scanOk').onclick=()=>{
+  if(locked)return;scr.className='scan-screen ok';
+  scr.innerHTML=`<div><div class="avatar">LG</div><h3 style="font-size:1.8rem;margin:0">ACCESO VÁLIDO</h3><p style="margin:.3em 0">Laura Gómez Rojas · CC ••• 4821</p><p style="font-size:.85rem;opacity:.9">Verifique que la foto coincida con la persona</p></div>`;
+  beep(880,180);navigator.vibrate&&navigator.vibrate(120);inside=Math.min(CAP,inside+1);updateDash();
+  setTimeout(()=>{scr.className='scan-screen';scr.innerHTML=idle},2600);
+};
+document.getElementById('scanBad').onclick=()=>{
+  if(locked)return;locked=true;scr.className='scan-screen bad';rejected++;updateDash();
+  let s=3;const first=new Date(Date.now()-1000*60*17).toLocaleTimeString('es-CO',{hour:'2-digit',minute:'2-digit'});
+  const paint=()=>scr.innerHTML=`<div><div style="font-size:3rem">⛔</div><h3 style="font-size:1.7rem;margin:0">CÓDIGO NO VÁLIDO</h3><p style="margin:.3em 0">Captura caducada o ticket ya usado</p><p style="font-size:.9rem">Primer uso registrado: <b>${first}</b></p><p style="font-size:.85rem;opacity:.9">Terminal bloqueada ${s} s</p></div>`;
+  paint();beep(220,500);navigator.vibrate&&navigator.vibrate([200,100,200,100,200]);
+  const iv=setInterval(()=>{s--;if(s<=0){clearInterval(iv);locked=false;scr.className='scan-screen';scr.innerHTML=idle}else paint()},1000);
+};
+
+/* ---------- Registro ---------- */
+document.getElementById('regForm').onsubmit=e=>{
+  e.preventDefault();
+  const f=e.target,req=[...f.querySelectorAll('[required]')];
+  const bad=req.find(i=>i.type==='checkbox'?!i.checked:!i.value.trim());
+  if(bad){bad.focus();toast(bad.type==='checkbox'?'Debes aceptar el tratamiento de datos para continuar.':'Completa el campo: '+f.querySelector(`label[for="${bad.id}"]`).textContent);return}
+  toast('✅ Registro simulado. Tu ticket QR está listo.');setTimeout(()=>go('ticket'),1200);
+};
+
+/* ---------- Bitácora ---------- */
+const hex=()=>Array.from({length:16},()=>'0123456789abcdef'[Math.floor(Math.random()*16)]).join('');
+const log=[
+ ['Validador · Puerta 1','Escaneo QR','Válido','ok'],['Validador · Puerta 2','Escaneo QR','Captura caducada','bad'],
+ ['Organizador','Edición de aforo (480→500)','Aplicado','w'],['Sistema','Alerta de aforo 80 %','Emitida','w'],
+ ['Validador · Puerta 1','Escaneo QR','Ticket duplicado','bad'],['Superadmin','Asignación de rol Validador','Aplicado','ok'],
+ ['Asistente','Consentimiento Ley 1581','Registrado','ok'],['Sistema','Notificación al titular (correo + SMS)','Enviada','ok']];
+document.getElementById('logRows').innerHTML=log.map((l,i)=>{const d=new Date(Date.now()-i*1000*60*4);return`<tr><td>${d.toLocaleDateString('es-CO')} ${d.toLocaleTimeString('es-CO')}</td><td>${l[0]}</td><td>${l[1]}</td><td><span class="pill ${l[3]}">${l[2]}</span></td><td>${hex()}…${hex().slice(0,6)}</td></tr>`}).join('');
+</script>
+</body>
+</html>
