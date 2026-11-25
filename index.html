@@ -27,18 +27,21 @@ a{color:var(--brand2)}
 /* Header */
 header.top{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
 .nav{display:flex;align-items:center;gap:16px;height:64px}
-.logo{display:flex;align-items:center;gap:10px;font-family:"Space Grotesk";font-weight:700;font-size:1.1rem;text-decoration:none;color:var(--text)}
+.logo{display:flex;align-items:center;gap:10px;font-family:"Space Grotesk",Inter,system-ui,sans-serif;font-weight:700;font-size:1.1rem;text-decoration:none;color:var(--text)}
 .logo-mark{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,var(--brand),var(--brand2));display:grid;place-items:center;color:#06121f;font-weight:800}
 .nav nav{display:flex;gap:4px;margin-left:auto;flex-wrap:wrap}
 .nav nav button{background:none;border:0;color:var(--muted);font:500 .92rem Inter;padding:.55em .8em;border-radius:9px;cursor:pointer;min-height:40px}
 .nav nav button[aria-selected="true"],.nav nav button:hover{color:var(--text);background:var(--panel2)}
 .hc-toggle{border:1px solid var(--line);background:var(--panel);color:var(--text);border-radius:9px;padding:.5em .8em;cursor:pointer;font:500 .85rem Inter;min-height:40px}
 .menu-btn{display:none}
+.hc-toggle{white-space:nowrap}
 @media(max-width:860px){
   .nav nav{display:none;position:absolute;top:64px;left:0;right:0;background:var(--bg);flex-direction:column;padding:10px 20px;border-bottom:1px solid var(--line)}
   .nav nav.open{display:flex}
   .menu-btn{display:block;margin-left:auto}
   .hc-toggle{margin-left:0}
+  .hc-label{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+  #hcBtn{min-width:44px}
 }
 
 /* Generic */
@@ -66,7 +69,7 @@ header.top{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--b
 .hero p.lead{font-size:1.12rem;color:var(--muted);max-width:56ch}
 .hero-cta{display:flex;gap:12px;flex-wrap:wrap;margin:26px 0}
 .hero-stats{display:flex;gap:28px;flex-wrap:wrap}
-.hero-stats b{font-family:"Space Grotesk";font-size:1.6rem;display:block}
+.hero-stats b{font-family:"Space Grotesk",Inter,system-ui,sans-serif;font-size:1.6rem;display:block}
 .hero-visual{position:relative}
 .phone{width:290px;margin:0 auto;background:#05090f;border:10px solid #1c2740;border-radius:36px;padding:18px 16px;box-shadow:0 30px 80px -20px #2bb3ff44}
 .phone .scr{background:var(--panel);border-radius:20px;padding:18px;text-align:center}
@@ -77,10 +80,10 @@ header.top{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--b
 .feature .ico{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;background:var(--panel2);font-size:1.3rem;margin-bottom:12px}
 
 /* Dashboard */
-.kpi b{font-family:"Space Grotesk";font-size:2rem;display:block}
+.kpi b{font-family:"Space Grotesk",Inter,system-ui,sans-serif;font-size:2rem;display:block}
 .gauge-wrap{display:flex;align-items:center;gap:26px;flex-wrap:wrap}
 .gauge{--p:0;width:180px;height:180px;border-radius:50%;background:conic-gradient(var(--gc,var(--ok)) calc(var(--p)*1%),var(--panel2) 0);display:grid;place-items:center;transition:background .6s}
-.gauge::after{content:attr(data-label);width:136px;height:136px;border-radius:50%;background:var(--panel);display:grid;place-items:center;font:700 2rem "Space Grotesk"}
+.gauge::after{content:attr(data-label);width:136px;height:136px;border-radius:50%;background:var(--panel);display:grid;place-items:center;font:700 2rem "Space Grotesk",Inter,system-ui,sans-serif}
 .alert{border-radius:11px;padding:12px 14px;font-weight:600;display:flex;gap:10px;align-items:center}
 .alert.ok{background:#3ddc9722;color:var(--ok)} .alert.warn{background:#ffb02022;color:var(--warn)} .alert.full{background:#ff5a5f22;color:var(--danger)}
 .bars{display:flex;align-items:flex-end;gap:6px;height:160px;padding-top:10px}
@@ -112,7 +115,7 @@ th{color:var(--muted);font-weight:600;font-size:.78rem;text-transform:uppercase;
 .v-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
 .v-actions .btn{min-height:56px}
 .btn-bad{background:var(--danger);color:#fff}
-.avatar{width:72px;height:72px;border-radius:50%;background:#ffffff33;display:grid;place-items:center;font:700 1.6rem "Space Grotesk";margin:0 auto 8px}
+.avatar{width:72px;height:72px;border-radius:50%;background:#ffffff33;display:grid;place-items:center;font:700 1.6rem "Space Grotesk",Inter,system-ui,sans-serif;margin:0 auto 8px}
 
 /* Forms */
 .form label{display:block;font-weight:600;font-size:.88rem;margin:14px 0 6px}
@@ -126,6 +129,16 @@ th{color:var(--muted);font-weight:600;font-size:.78rem;text-transform:uppercase;
 .log{font-family:ui-monospace,monospace;font-size:.8rem}
 .log td{white-space:nowrap}
 
+.form textarea{width:100%;padding:.8em .9em;border-radius:10px;border:1px solid var(--line);background:var(--panel2);color:var(--text);font:1rem Inter,system-ui,sans-serif;resize:vertical}
+.gallery figure{margin:0;padding:12px;display:flex;flex-direction:column;gap:10px}
+.gallery{grid-template-columns:2fr 1fr 1fr}
+.gallery img{width:100%;height:400px;object-fit:cover;object-position:top;border-radius:10px;display:block;background:var(--bg)}
+.gallery figure:first-child img{object-fit:contain;object-position:center}
+@media(max-width:900px){.gallery{grid-template-columns:1fr 1fr}.gallery figure:first-child{grid-column:1/-1}.gallery figure:first-child img{height:auto}}
+@media(max-width:620px){.gallery{grid-template-columns:1fr}}
+.gallery figcaption{font-size:.88rem;color:var(--muted)}
+.cta-band{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;background:linear-gradient(135deg,#3ddc9718,#2bb3ff18)}
+.links{padding-left:1.2em;margin:.4em 0} .links li{margin:.35em 0}
 footer{border-top:1px solid var(--line);padding:34px 0;color:var(--muted);font-size:.9rem}
 footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
@@ -146,8 +159,9 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
       <button role="tab" data-go="validador">Validador</button>
       <button role="tab" data-go="auditoria">Auditoría</button>
       <button role="tab" data-go="equipo">Equipo</button>
+      <button role="tab" data-go="contacto">Contacto</button>
     </nav>
-    <button class="hc-toggle" id="hcBtn" aria-pressed="false" title="Modo alto contraste">◐ Alto contraste</button>
+    <button class="hc-toggle" id="hcBtn" aria-pressed="false" title="Activar o desactivar el modo de alto contraste"><svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true" style="vertical-align:-2px"><circle cx="8" cy="8" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 1a7 7 0 0 1 0 14z" fill="currentColor"/></svg><span class="hc-label"> Alto contraste</span></button>
   </div>
 </header>
 
@@ -164,6 +178,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
         <div class="hero-cta">
           <button class="btn btn-primary" data-go="dashboard">Ver dashboard en vivo →</button>
           <button class="btn btn-ghost" data-go="validador">Probar el validador</button>
+          <button class="btn btn-ghost" data-go="contacto">Solicitar una demostración</button>
         </div>
         <div class="hero-stats">
           <div><b>&lt; 1,5 s</b><span class="muted">escaneo QR</span></div>
@@ -202,6 +217,26 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
         <div><h3 style="font-size:1rem">Presión en la fila</h3><p class="muted">Un ticket inválido bloquea la terminal 3 s y muestra la hora del primer uso registrado.</p></div>
         <div><h3 style="font-size:1rem">Anti-phishing</h3><p class="muted">El asistente legítimo recibe correo y SMS en el momento exacto en que su ticket se valida.</p></div>
       </div>
+    </div>
+
+    <div class="section-title" style="margin-top:44px"><h2>Mira EventFlow en acción</h2><span class="muted">Recorrido por las pantallas principales</span></div>
+    <div class="card" style="padding:12px">
+      <video controls muted playsinline preload="metadata" poster="img/poster-demo.webp" width="1280" height="720" style="width:100%;height:auto;border-radius:10px;display:block">
+        <source src="video/demo-eventflow.mp4" type="video/mp4">
+        Tu navegador no puede reproducir este video. <a href="video/demo-eventflow.mp4">Descárgalo aquí</a>.
+      </video>
+    </div>
+
+    <div class="section-title" style="margin-top:44px"><h2>Galería de pantallas</h2><span class="muted">Versión escritorio y versión móvil</span></div>
+    <div class="grid gallery">
+      <figure class="card"><img src="img/escritorio-dashboard.webp" width="1280" height="800" loading="lazy" alt="Dashboard de aforo en computador con el porcentaje de ocupación, gráfico de ingresos por minuto y tabla de últimos accesos"><figcaption>Dashboard de aforo · escritorio</figcaption></figure>
+      <figure class="card"><img src="img/movil-ticket.webp" width="390" height="844" loading="lazy" alt="Ticket con código QR dinámico visto en un celular"><figcaption>Ticket QR dinámico · móvil</figcaption></figure>
+      <figure class="card"><img src="img/movil-validador.webp" width="390" height="844" loading="lazy" alt="Terminal del validador en un celular mostrando la pantalla verde de acceso válido"><figcaption>Validador en puerta · móvil</figcaption></figure>
+    </div>
+
+    <div class="card cta-band" style="margin-top:44px">
+      <div><h2 style="margin:0">¿Organizas eventos en tu institución?</h2><p class="muted" style="margin:.4em 0 0">Escríbenos y te mostramos cómo SIGEV puede controlar el aforo de tu próximo evento.</p></div>
+      <button class="btn btn-primary" data-go="contacto">Contáctanos →</button>
     </div>
   </div>
 </section>
@@ -368,6 +403,58 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
       </div>
     </div>
     <p class="muted" style="margin-top:18px">Aprendices de Tecnología en Análisis y Desarrollo de Software (ADSO) · Ficha 3413974 · SENA CIES Regional Huila.</p>
+    <div style="margin-top:22px"><button class="btn btn-primary" data-go="contacto">Escribir al equipo →</button></div>
+  </div>
+</section>
+
+<!-- CONTACTO -->
+<section class="view" id="contacto" aria-labelledby="t-con">
+  <div class="wrap">
+    <div class="section-title"><div><h2 id="t-con">Contacto</h2><p class="muted">¿Quieres una demostración de SIGEV o tienes preguntas sobre el proyecto? Escríbenos.</p></div></div>
+    <div class="alert ok" id="gracias" style="display:none;margin-bottom:18px" role="status">✅ ¡Gracias! Tu mensaje fue enviado. Te responderemos pronto a tu correo.</div>
+    <div class="grid g2">
+      <form class="card form" id="contactForm" action="https://formsubmit.co/galeanoramirezb@gmail.com" method="POST">
+        <input type="hidden" name="_subject" value="Nuevo mensaje desde EventFlow Manager (SIGEV)">
+        <input type="hidden" name="_template" value="table">
+        <input type="hidden" name="_next" id="nextUrl" value="https://galeanoramirezb-ops.github.io/eventflow-manager/#gracias">
+        <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <label for="c-nombre">Nombre completo</label>
+        <input id="c-nombre" name="nombre" autocomplete="name" required placeholder="Tu nombre">
+        <label for="c-correo">Correo electrónico</label>
+        <input id="c-correo" name="email" type="email" autocomplete="email" required placeholder="nombre@correo.com">
+        <label for="c-org">Institución u organización (opcional)</label>
+        <input id="c-org" name="organizacion" autocomplete="organization" placeholder="Ej. SENA CIES Huila">
+        <label for="c-motivo">Motivo</label>
+        <select id="c-motivo" name="motivo">
+          <option>Solicitar una demostración</option>
+          <option>Preguntas sobre el proyecto</option>
+          <option>Sugerencias o comentarios</option>
+        </select>
+        <label for="c-msg">Mensaje</label>
+        <textarea id="c-msg" name="mensaje" rows="5" required minlength="10" placeholder="Cuéntanos qué necesitas"></textarea>
+        <div class="check"><input type="checkbox" id="c-habeas" name="autoriza_datos" value="Sí" required><label for="c-habeas" style="margin:0;font-weight:400">Autorizo el uso de mis datos solo para responder este mensaje (Ley 1581 de 2012).</label></div>
+        <button class="btn btn-primary" style="width:100%;margin-top:20px" type="submit">Enviar mensaje</button>
+      </form>
+      <div class="grid" style="align-content:start">
+        <div class="card" style="padding:12px">
+          <iframe title="Mapa de ubicación del SENA Centro de la Industria, la Empresa y los Servicios en Neiva, Huila" src="https://www.google.com/maps?q=SENA+Centro+de+la+Industria+la+Empresa+y+los+Servicios+Neiva+Huila&amp;output=embed" width="600" height="300" style="border:0;width:100%;height:300px;border-radius:10px;display:block" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+          <p class="muted" style="font-size:.85rem;margin:10px 4px 2px">📍 SENA · Centro de la Industria, la Empresa y los Servicios (CIES), Neiva, Huila · <a href="https://www.google.com/maps/search/?api=1&amp;query=SENA+CIES+Neiva+Huila" target="_blank" rel="noopener">Abrir en Google Maps</a></p>
+        </div>
+        <div class="card">
+          <h3>Escríbenos directamente</h3>
+          <p style="margin:.3em 0"><a href="mailto:galeanoramirezb@gmail.com?subject=Información%20sobre%20EventFlow%20Manager">✉️ galeanoramirezb@gmail.com</a></p>
+          <p style="margin:.3em 0"><a href="mailto:andresfelipecastrobedoya@gmail.com?subject=Información%20sobre%20EventFlow%20Manager">✉️ andresfelipecastrobedoya@gmail.com</a></p>
+          <h3 style="margin-top:18px">Enlaces de interés</h3>
+          <ul class="links">
+            <li><a href="https://www.sena.edu.co" target="_blank" rel="noopener">Servicio Nacional de Aprendizaje (SENA)</a></li>
+            <li><a href="https://www.w3.org/WAI/standards-guidelines/wcag/es" target="_blank" rel="noopener">Pautas de accesibilidad WCAG (W3C)</a></li>
+            <li><a href="https://www.sic.gov.co/tema/proteccion-de-datos-personales" target="_blank" rel="noopener">Protección de datos personales (SIC)</a></li>
+            <li><a href="https://owasp.org/www-project-top-ten/" target="_blank" rel="noopener">OWASP Top 10</a></li>
+            <li><a href="https://github.com/galeanoramirezb-ops/eventflow-manager" target="_blank" rel="noopener">Código fuente en GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 </main>
@@ -376,6 +463,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
   <div class="wrap">
     <div><b style="color:var(--text)">EventFlow Manager · SIGEV</b><br>Mockup navegable del proyecto formativo · v1.0 · 2026</div>
     <div>Brenda Carolina Galeano Ramírez · Andrés Felipe Castro Bedoya<br>SENA · ADSO 3413974</div>
+    <div><a href="#contacto" data-go="contacto">Contacto</a> · <a href="https://github.com/galeanoramirezb-ops/eventflow-manager" target="_blank" rel="noopener">GitHub</a></div>
   </div>
 </footer>
 
@@ -390,11 +478,15 @@ function go(id){
   views.forEach(v=>v.classList.toggle('active',v.id===id));
   tabs.forEach(t=>t.setAttribute('aria-selected',t.dataset.go===id));
   nav.classList.remove('open');menuBtn.setAttribute('aria-expanded','false');
-  history.replaceState(null,'','#'+id);window.scrollTo({top:0});
+  history.replaceState(null,'','#'+id);window.scrollTo({top:0,behavior:'instant'});
 }
 document.addEventListener('click',e=>{const b=e.target.closest('[data-go]');if(b){e.preventDefault();go(b.dataset.go)}});
 menuBtn.onclick=()=>{const o=nav.classList.toggle('open');menuBtn.setAttribute('aria-expanded',o)};
-const start=location.hash.slice(1); if(start&&document.getElementById(start))go(start);
+const start=location.hash.slice(1);
+if(start==='gracias'){go('contacto');document.getElementById('gracias').style.display='flex';}
+else if(start&&document.getElementById(start))go(start);
+/* El formulario regresa a la misma página después de enviarse */
+document.getElementById('nextUrl').value=location.href.split('#')[0]+'#gracias';
 
 /* ---------- Alto contraste ---------- */
 const hcBtn=document.getElementById('hcBtn');

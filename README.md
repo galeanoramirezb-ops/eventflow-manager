@@ -13,8 +13,20 @@ Mockup navegable (sin base de datos) del **Sistema Inteligente de Gestión de Ev
 | Validador | RF8, RF13 | Terminal de puerta con respuesta visual, sonora y háptica |
 | Auditoría | RF12 | Bitácora forense con hashes encadenados |
 | Equipo | — | Arquitectura de cuatro capas y equipo |
+| Contacto | — | Formulario de contacto funcional (FormSubmit), mapa de Google y enlaces directos |
 
-Todos los datos son simulados con JavaScript en el navegador. No hay backend ni base de datos.
+Los datos del sistema son simulados con JavaScript en el navegador; no hay backend ni base de datos. El formulario de **Contacto** sí envía los mensajes al correo del equipo mediante [FormSubmit](https://formsubmit.co).
+
+## Recursos multimedia
+
+- Video de demostración (`video/demo-eventflow.mp4`)
+- Galería de capturas en versión escritorio y móvil (`img/`, formato WebP optimizado)
+- Mapa de Google con la ubicación del SENA CIES en Neiva
+- Enlaces directos al SENA, W3C (WCAG), SIC y OWASP
+
+## URL pública
+
+https://galeanoramirezb-ops.github.io/eventflow-manager/
 
 ## Cómo verlo
 
